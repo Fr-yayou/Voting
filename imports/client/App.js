@@ -21,6 +21,9 @@ class App extends Component{
 
     }
     render() {
+        if (!this.props.ready) {
+            return <div>Loading</div>
+        }
 
         return (
             <Fragment>
@@ -44,7 +47,9 @@ class App extends Component{
 //create comtainer to acess data in the front//
 
 export default MyListItem = withTracker(() => {
+    let itemsSub = Meteor.subscribe('allItems');
     return {
+        ready:itemsSub.ready(),
         items:Items.find({}).fetch()
     }
 })(App)
