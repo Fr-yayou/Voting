@@ -10,20 +10,13 @@ class App extends Component{
         const itemTwo = this.refs.itemTwo.value.trim()
         //check if the input is enpty//
         if (itemOne != '' && itemTwo != '') {
-            Items.insert({
-                itemOne: {
-                    text: itemOne,
-                    value: 0,
-                },
-                itemTwo: {
-                    text: itemTwo,
-                    value: 0,
-            }
-            })
-            //reset the input//
-            this.refs.itemOne.value = '';
-            this.refs.itemTwo.value = '';
-
+            Meteor.call('insertNewItem', itemOne, itemTwo, (err, res) => {
+                if (!err) {
+                     //reset the input//
+                    this.refs.itemOne.value = '';
+                    this.refs.itemTwo.value = '';
+                }
+            });
         }
 
     }
